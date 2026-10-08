@@ -24,3 +24,9 @@ README.md
 # Restos de la version anterior en PHP plano, si quedaran
 conexion.php
 guardar.php
+
+data
+backup
+**/*.sqlite
+**/*.sqlite-wal
+**/*.sqlite-shm

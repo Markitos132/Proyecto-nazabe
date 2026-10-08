@@ -27,6 +27,10 @@ class AppServiceProvider extends ServiceProvider
          * lectura en las tarjetas, el "última vez visto" de Dispositivos y
          * el detalle de la ficha.
          */
+        if (config('database.default') === 'sqlite') {
+            \Illuminate\Support\Facades\DB::statement('PRAGMA journal_mode=WAL;');
+             \Illuminate\Support\Facades\DB::statement('PRAGMA busy_timeout=5000;');
+}
         $idioma = config('app.locale');
 
         Carbon::setLocale($idioma);

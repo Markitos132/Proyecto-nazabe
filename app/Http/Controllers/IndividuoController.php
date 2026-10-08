@@ -17,10 +17,10 @@ class IndividuoController extends Controller
             ->where('id_usuario', auth()->id())
             ->with('sesionActiva.dispositivo')
             ->when($request->filled('especie'), fn ($q) =>
-                $q->where('especie', 'ilike', '%'.$request->especie.'%'))
+                $q->where('especie', 'like', '%'.$request->especie.'%'))
             ->when($request->filled('estado'),  fn ($q) => $q->where('estado', $request->estado))
             ->when($request->filled('codigo'),  fn ($q) =>
-                $q->where('codigo_individuo', 'ilike', '%'.$request->codigo.'%'))
+                $q->where('codigo_individuo', 'like', '%'.$request->codigo.'%'))
             ->orderByRaw("(estado = ?) asc", ['liberado'])
             ->orderBy('codigo_individuo')
             ->get();

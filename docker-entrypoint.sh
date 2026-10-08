@@ -42,6 +42,13 @@ mkdir -p storage/framework/cache/data \
          storage/logs
 chown -R www-data:www-data storage bootstrap/cache 2>/dev/null || true
 
+# Con SQLite, crear el archivo de la base si no existe (primer arranque).
+if [ "${DB_CONNECTION}" = "sqlite" ] && [ -n "${DB_DATABASE}" ] && [ ! -f "${DB_DATABASE}" ]; then
+    echo "→ Creando base SQLite en ${DB_DATABASE}"
+    mkdir -p "$(dirname "${DB_DATABASE}")"
+    touch "${DB_DATABASE}"
+fi
+
 # Las migraciones no corren solas por defecto. Aplicarlas en cada deploy
 # es cómodo hasta el día que un despliegue automático altera la base de
 # producción sin que nadie lo pida. Se activa poniendo

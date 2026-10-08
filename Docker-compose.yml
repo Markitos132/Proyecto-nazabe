@@ -1,0 +1,18 @@
+services:
+  app:
+    build: .
+    container_name: bionea
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      PORT: "8080"
+      # Las migraciones estan protegidas con Schema::hasTable(), asi que
+      # correrlas en cada arranque es inocuo. Crean las tablas si la base
+      # esta vacia y no tocan nada si ya tiene datos.
+      RUN_MIGRATIONS: "true"
+    ports:
+      # Solo accesible desde el propio servidor; Tailscale hace de puente.
+      - "127.0.0.1:8080:8080"
+    volumes:
+      # La base SQLite vive fuera del contenedor para sobrevivir a rebuilds.
+      - ./data:/var/www/data

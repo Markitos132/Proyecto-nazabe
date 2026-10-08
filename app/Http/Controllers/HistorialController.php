@@ -24,7 +24,7 @@ class HistorialController extends Controller
             ->with(['individuo', 'dispositivo', 'mediciones'])
             ->when($request->filled('individuo'), fn ($q) =>
                 $q->whereHas('individuo', fn ($i) =>
-                    $i->where('codigo_individuo', 'ilike', '%'.$request->individuo.'%')))
+                    $i->where('codigo_individuo', 'like', '%'.$request->individuo.'%')))
             ->when($request->filled('especie'), fn ($q) =>
                 $q->whereHas('individuo', fn ($i) => $i->where('especie', $request->especie)))
             ->when($request->filled('desde'), fn ($q) =>
